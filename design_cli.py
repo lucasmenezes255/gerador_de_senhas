@@ -1,11 +1,14 @@
 from time import sleep
 import os
+from erros import Error
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 from rich.table import Table
 from rich import print as rprint
 console = Console()
+
 class Util:
     def __init__(self):
         pass
@@ -19,25 +22,33 @@ class Util:
 
 class Tela:
     def __init__(self):
-        titulo_centralizado = Align.center("[bold green]GERADOR DE SENHA[/bold green]")
-        console.print(Panel(titulo_centralizado,expand=True, border_style="green", ))
+        titulo_centralizado = Align.center("[bold green1]GERADOR DE SENHA[/bold green1]")
+        console.print(Panel(titulo_centralizado,expand=True, border_style="green1", ))
         self.indices = [1, 2, 3, 4, 5]
 
     def quantidade_caracs(self):
+        """
+        :return: Menu de seleção do tamanho da senha
+        """
         while True:
-            personalizado = False
             Util.limpar_tela()
             self.__init__()
-            print(f'\n{"TAMANHO DA SENHA":^70}\n')
-            print('=' * 70)
-            print('[1] 4 Dígitos              [2] 6 Dígitos')
-            print('[3] 8 Dígitos              [4] 12 Dígitos')
-            print('[5] Tamanho Personalizado')
-            print('-' * 70)
+            tabela = Table(title="[green bold]TAMANHO DA SENHA[/]", show_header=False, box=box.ASCII)
+            tabela.add_column("num1", style="green1 bold", justify="right")
+            tabela.add_column("desc1", style="white bold")
+            tabela.add_column("num2", style="green1 bold", justify="right")
+            tabela.add_column("desc2", style="white bold")
+
+            tabela.add_row("1", "4 Dígitos", "2", "6 Dígitos")
+            tabela.add_row("3", "8 Dígitos", "4", "12 Dígitos")
+            tabela.add_row("5", "Tamanho Personalizado", "", "")
+            console.print(tabela)
+
+            personalizado = False
             try:
-                quantidade_carac = int(input('Informe a opção desejada: '))
+                quantidade_carac = int(console.input('[i bright_magenta]Informe a opção desejada: [/]'))
                 if quantidade_carac not in [1, 2, 3, 4, 5]:
-                    print('ERRO! INFORME UMA OPÇÃO VÁLIDA')
+                    Error.insirer_opcao_valida()
                     sleep(2)
                 elif quantidade_carac == 1:
                     quantidade_carac = 4
@@ -54,43 +65,54 @@ class Tela:
                 elif quantidade_carac == 5:
                     personalizado = True
             except:
-                print('ERRO! INSIRA UM NÚMERO!')
+                Error.insirer_opcao_valida()
                 sleep(1)
             if personalizado:
                 try:
-                    quantidade_carac = int(input('Informe a quantidade de caracteres que a senha terá: '))
+                    quantidade_carac = int(console.input('[i blue1]Informe a quantidade de caracteres que a senha terá: [/]'))
                     if quantidade_carac < 4:
-                        print('\nSenha muito pequena! O tamanho mínimo de senha é 4 caracteres')
+                        rprint('\n[b u red1]SENHA MUITO PEQUENA! O TAMANHO MÍNIMO É 4 CARACS[/]')
                         sleep(2)
                     elif quantidade_carac > 100:
-                        print('\nSenha muito grande! O tamanho máximo de senha é 100 caracteres')
+                        rprint('\n[b u red1]SENHA MUITO GRANDE! O TAMANHO MÁXIMO É 100 CARACS[/]')
                         sleep(2)
                     else:
                         return quantidade_carac
                 except:
-                    print('ERRO! INSIRA UM NÚMERO!')
+                    Error.insirer_opcao_valida()
                     sleep(1)
                     Util.limpar_tela()
                     self.__init__()
 
     def preferencias(self, lista_verificado=None):
+        """
+        Menu de seleção dos possíveis caracteres que a senha pode ter. Após selecionar uma opção, seu índice
+         é substituído por um ícone de 'CHECK'
+
+         :param lista_verificado: Recebe as opções escolhidas pelo menu para substituir elas pelo 'CHECK' na tela
+        """
         Util.limpar_tela()
         for i, valor in enumerate(self.indices):
             for j in lista_verificado:
                 if valor == j:
-                    self.indices[i] = '\u2714'
-        print('=' * 70)
-        print(f'{"POSSÍVEIS CARACTERES DA SENHA":^70}')
-        print('=' * 70)
-        print(f'[{self.indices[0]}] Caracteres Especiais (!, @, #, $, %, &, *, -, _, +, =, /, ?, .)')
-        print(f'[{self.indices[1]}] Letras Maiúscula          [{self.indices[2]}] Letras Minúsculas')
-        print(f'[{self.indices[3]}] Números                   [{self.indices[4]}] Todas as opções')
-        print(f'[6] Gerar Senha               [7] Voltar')
-        print('-' * 70)
+                    self.indices[i] = '[green1]\u2714[/]'
+        titulo_centralizado = Align.center("[b green1]POSSÍVEIS CARACTERES DA SENHA[/]")
+        rprint((Panel(titulo_centralizado, expand=True, border_style="green1")))
+        tabela = Table(title="", show_header=False, box=None)
 
-'''
-PAINEL COM O TÍTULO "GERADOR DE SENHAS CRIADO". PRÓXIMO PASSO É DESENVOLVER TABELAS, OUTROS PAINÉIS OU O QUE FOR
-INTERESSANTE APLICAR NO MENU QUE SELECIONA A QUANTIDADE DE DÍGITOS E O MENU DOS TIPOS DE CARACTERES. PENSO EM DEIXAR
-TUDO NA COR VERDE. PRA CONTRASTAR UM POUCO COM O TERMINAL E FICA NA VIBE ESTERIOTIPADA DE HACKER COM TEMA VERDE E PRETO.
-PRA SAÍDA, É BOM COLOCAR ALGUMA OUTRA COR MAIS DESTACADA. TALVEZ UM bold yellow, OU bold purple.
-'''
+        tabela.add_column(header="num1", style="turquoise2 bold")
+        tabela.add_column(header="desc1", style="medium_orchid1 bold")
+        tabela.add_column(header="num2", style="turquoise2 bold")
+        tabela.add_column(header="desc2", style="medium_orchid1 bold")
+
+        tabela.add_row(str(self.indices[0]),
+                       "Caracteres Especiais [light_goldenrod1 bold](!, @, #, $, %, &, *, -, _, +, =, /, ?, .)[/]",
+                       "", "")
+        tabela.add_row(str(self.indices[1]), "Letras Maiúscula", str(self.indices[2]), "Letras Minúsculas")
+        tabela.add_row(str(self.indices[3]), "Números", str(self.indices[4]), "Todas as opções")
+        tabela.add_row("6", "Gerar Senha", "7", "Voltar")
+        tabela.add_row("","[not bold khaki1]A opção [/][not bold u khaki1]5[/]"
+                          "[not bold khaki1] marca todas as outras opções de caracteres "
+                       "e gera a senha [red1]AUTOMATICAMENTE[/]",
+                       "", "")
+        console.print(tabela)
