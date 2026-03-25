@@ -41,15 +41,14 @@ class Tela:
 
             tabela.add_row("1", "4 Dígitos", "2", "6 Dígitos")
             tabela.add_row("3", "8 Dígitos", "4", "12 Dígitos")
-            tabela.add_row("5", "Tamanho Personalizado", "", "")
+            tabela.add_row("5", "Tamanho Personalizado", "6", "Sair")
             console.print(tabela)
 
             personalizado = False
             try:
                 quantidade_carac = int(console.input('[i bright_magenta]Informe a opção desejada: [/]'))
-                if quantidade_carac not in [1, 2, 3, 4, 5]:
+                if quantidade_carac not in [1, 2, 3, 4, 5, 6]:
                     Error.insirer_opcao_valida()
-                    sleep(2)
                 elif quantidade_carac == 1:
                     quantidade_carac = 4
                     return quantidade_carac
@@ -64,9 +63,10 @@ class Tela:
                     return quantidade_carac
                 elif quantidade_carac == 5:
                     personalizado = True
+                elif quantidade_carac == 6:
+                    return 6
             except:
                 Error.insirer_opcao_valida()
-                sleep(1)
             if personalizado:
                 try:
                     quantidade_carac = int(console.input('[i blue1]Informe a quantidade de caracteres que a senha terá: [/]'))
@@ -80,7 +80,6 @@ class Tela:
                         return quantidade_carac
                 except:
                     Error.insirer_opcao_valida()
-                    sleep(1)
                     Util.limpar_tela()
                     self.__init__()
 

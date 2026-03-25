@@ -51,38 +51,39 @@ lista_escolha = []
 criacao_senha = Senha()
 tela_senha = Tela()
 quantidade_caracteres = tela_senha.quantidade_caracs()
-while True:
-    Util.limpar_tela()
-    tela_senha.preferencias(lista_escolha)
-    try:
-        escolha_preferencias = int(console.input('\n[cyan1]Escolha uma opção[/] '
-                                                 '[u bright_magenta](em caso de várias escolha, selecione 1 por vez):[/] '))
-        if escolha_preferencias not in [1, 2, 3, 4, 5, 6, 7]:
-            Error.insirer_opcao_valida()
-            sleep(1)
-        else:
-            if escolha_preferencias != 6:
-                if escolha_preferencias == 5:
-                    lista_escolha = [5]
-                    break
-                elif escolha_preferencias == 7:
-                    lista_escolha = []
-                    tela_senha.quantidade_caracs()
-                else:
-                    lista_escolha.append(escolha_preferencias)
+if quantidade_caracteres != 6:
+    while True:
+        Util.limpar_tela()
+        tela_senha.preferencias(lista_escolha)
+        try:
+            escolha_preferencias = int(console.input('\n[cyan1]Escolha uma opção[/] '
+                                                     '[u bright_magenta](em caso de várias escolha, selecione 1 por vez):[/] '))
+            if escolha_preferencias not in [1, 2, 3, 4, 5, 6, 7]:
+                Error.insirer_opcao_valida()
             else:
-                if lista_escolha == []:
-                    Error.nenhuma_opcao_selecionada()
-                    sleep(1.5)
+                if escolha_preferencias != 6:
+                    if escolha_preferencias == 5:
+                        lista_escolha = [5]
+                        break
+                    elif escolha_preferencias == 7:
+                        lista_escolha = []
+                        tela_senha.quantidade_caracs()
+                    else:
+                        lista_escolha.append(escolha_preferencias)
                 else:
-                    break
-        sleep(0.5)
-    except:
-        Error.insirer_opcao_valida()
-        sleep(1)
-criacao_senha.selecao_caracteres(lista_escolha)
-senha_gerada = criacao_senha.gerar_senha(quantidade_caracteres)
+                    if lista_escolha == []:
+                        Error.nenhuma_opcao_selecionada()
+                    else:
+                        break
+            sleep(0.5)
+        except:
+            Error.insirer_opcao_valida()
+    criacao_senha.selecao_caracteres(lista_escolha)
+    senha_gerada = criacao_senha.gerar_senha(quantidade_caracteres)
 
-console.print(f'\n[green_yellow]SENHA GERADA:[/] [b u green_yellow]{senha_gerada}[/]')
-console.print('\n[dim pale_turquoise1]Copiado para a área de transferência![/]')
-copy(senha_gerada)
+    console.print(f'\n[green_yellow]SENHA GERADA:[/] [b u green_yellow]{senha_gerada}[/]')
+    console.print('\n[dim pale_turquoise1]Copiado para a área de transferência![/]')
+    copy(senha_gerada)
+else:
+    console.print('\n[red3]Saindo...[/]')
+    sleep(1.75)
