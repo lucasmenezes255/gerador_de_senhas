@@ -64,12 +64,12 @@ class Tela:
                 elif quantidade_carac == 5:
                     personalizado = True
                 elif quantidade_carac == 6:
-                    return 6
+                    return None
             except:
                 Error.insirer_opcao_valida()
             if personalizado:
                 try:
-                    quantidade_carac = int(console.input('[i blue1]Informe a quantidade de caracteres que a senha terá: [/]'))
+                    quantidade_carac = int(console.input('[b i blue1]Informe a quantidade de caracteres que a senha terá: [/]'))
                     if quantidade_carac < 4:
                         rprint('\n[b u red1]SENHA MUITO PEQUENA! O TAMANHO MÍNIMO É 4 CARACS[/]')
                         sleep(2)
