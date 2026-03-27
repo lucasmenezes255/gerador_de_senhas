@@ -54,16 +54,19 @@ que o usuário pode escolher e após ser gerada, a senha é copiada *automaticam
      ```bash
       git clone https://github.com/lucasmenezes255/gerador_de_senhas.git
      ```
-  2. Criar um ambiente virtual dentro da pasta clonada
-     ```bash (Linux/Mac)
+  3. Criar um ambiente virtual dentro da pasta clonada
+
+     - bash (Linux/Mac)
+     ```
       python3 -m venv .venv
       source .venv/bin/activate
      ```
-     ``` bash (Windows)
+     - bash (Windows)
+     ``` 
       python3 -m venv .venv
       .venv\Scripts\activate
      ```
-  3. Instalar as dependências necessárias
+  5. Instalar as dependências necessárias
      ```bash
        pip install -r requirements.txt
      ```
