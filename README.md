@@ -24,6 +24,7 @@ que o usuário pode escolher e após ser gerada, a senha é copiada *automaticam
 
 ## Dependências necessárias
 - Linux
+
   Como o sistema é CLI e utiliza da lib `pyperclip` para copiar a senha, os SO Linux precisa do utilitário `xclip` para copiar textos pelo terminal.
   Sendo assim, para sistemas Linux é necessário realizar essa instalação:
   
